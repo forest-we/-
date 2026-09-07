@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/valid-template-root -->
 <template>
-  <div>
+  <div id="as">
     <div>
       <el-avatar
         shape="square"
@@ -9,13 +9,43 @@
       >
         <el-icon><User /></el-icon>
       </el-avatar>
-      <p>username</p>
+      <p>{{ '作者: ' + postData.username }}</p>
     </div>
     <div>
-      <p>内容</p>
+      <h2>{{ postData.title }}</h2>
     </div>
-    <div>评论区</div>
+    <div>
+      <p>{{ postData.content }}</p>
+    </div>
+    <hr />
+    <div>
+      <p>评论区</p>
+      <p>{{}}</p>
+    </div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useRoute } from 'vue-router'
+import axios from '@/axios/axios'
+import { onMounted, ref } from 'vue'
+const route = useRoute()
+const postId = route.params.id
+console.log(postId)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const postData = ref<any>('')
+const postGet = async () => {
+  const res = await axios.get(`/post/list/${postId}`)
+  postData.value = res.data.data
+  console.log(res.data.data)
+}
+onMounted(() => {
+  postGet()
+})
+</script>
+
+<style>
+#as {
+  text-align: center;
+}
+</style>
