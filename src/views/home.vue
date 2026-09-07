@@ -1,42 +1,66 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div id="er">
-    <div class="tt">
-      <el-form-item label="搜索文章">
-        <el-input autocomplete="off" />
-      </el-form-item>
-    </div>
-    <el-card style="max-width: 480px">
-      <el-button @click="rou()"> 点击查看 </el-button>
-      <el-collapse>
-        <el-collapse-item title="作者:" name="1">
-          <p>阿八八八八八</p>
-        </el-collapse-item>
-      </el-collapse>
+  <div>
+    <el-card style="max-width: 360px">
+      <div>
+        <div>
+          <el-button @click="rou">{{ postData.title }}</el-button>
+        </div>
+        <div>
+          <p>
+            {{ '发布时间  ' + postData.create_time }}
+          </p>
+        </div>
+      </div>
     </el-card>
-    <el-card style="max-width: 480px">
-      <el-button> 点击查看 </el-button>
-      <el-collapse>
-        <el-collapse-item style="" title="Consistency" name="1">
-          <div>skbdfdsgfzhbzzzzzzzbzbzbzbzbzbbvbkesz</div>
-        </el-collapse-item>
-      </el-collapse>
+    <el-card style="max-width: 300px">
+      <div>
+        <div>
+          <el-button @click="rou">{{ '标题部分' }}</el-button>
+        </div>
+        <div>
+          <p>
+            {{ '正文' }}
+          </p>
+        </div>
+      </div>
     </el-card>
-    <el-card style="max-width: 480px">
-      <el-button> 点击查看 </el-button>
-      <el-collapse>
-        <el-collapse-item style="" title="Consistency" name="1">
-          <div>skbdfdsgfzhbzzzzzzzbzbzbzbzbzbbvbkesz</div>
-        </el-collapse-item>
-      </el-collapse>
+    <el-card style="max-width: 300px">
+      <div>
+        <div>
+          <el-button @click="rou">{{ '标题部分' }}</el-button>
+        </div>
+        <div>
+          <p>
+            {{ '正文' }}
+          </p>
+        </div>
+      </div>
     </el-card>
-    <div id="ty">
-      <el-card style="max-width: 300px">
-        <div>大家都在搜</div>
-        <p>1</p>
-        <p>2</p>
-      </el-card>
-    </div>
+    <el-card style="max-width: 300px">
+      <div>
+        <div>
+          <el-button @click="rou">{{ '标题部分' }}</el-button>
+        </div>
+        <div>
+          <p>
+            {{ '正文' }}
+          </p>
+        </div>
+      </div>
+    </el-card>
+    <el-card style="max-width: 300px">
+      <div>
+        <div>
+          <el-button @click="rou">{{ '标题部分' }}</el-button>
+        </div>
+        <div>
+          <p>
+            {{ '正文' }}
+          </p>
+        </div>
+      </div>
+    </el-card>
   </div>
 </template>
 
@@ -44,18 +68,26 @@
 <script setup lang="ts">
 import axios from '@/axios/axios'
 import router from '@/router'
+import { ElMessage } from 'element-plus'
 import { ref } from 'vue'
 import { onMounted } from 'vue'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const postData = ref('')
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const username = ref('')
-
-onMounted(async () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const res = await axios.get('post/list')
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const postData = ref<any>('')
+onMounted(() => {
+  postGet()
 })
+
+const postGet = async () => {
+  try {
+    const res = await axios.get('post/list')
+    postData.value = res.data.data[0]
+    console.log(res.data.data)
+  } catch {
+    ElMessage.error('额,出了点问题')
+  }
+}
+console.log('nh')
 
 const rou = () => {
   // oxlint-disable-next-line no-unused-expressions

@@ -16,7 +16,15 @@ export const useUserStore = defineStore('user', () => {
     localStorage.setItem('token', token.value)
   }
 
+  const logout = () => {
+    localStorage.removeItem('token')
+    username.value = ''
+    userCode.value = ''
+    window.location.href = '/login'
+  }
+
   return {
+    logout,
     Login,
     token,
     username,

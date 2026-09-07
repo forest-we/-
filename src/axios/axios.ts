@@ -29,8 +29,13 @@ service.interceptors.response.use(
     return response
   },
   function (error) {
-    // 超出 2xx 范围的状态码都会触发该函数。
-    // 对响应错误做点什么
+    const userStore = useUserStore()
+    if (error.response?.status === 401) {
+      const publicPages = ['login', 'register']
+      if (!publicPages.includes(window.location.pathname)) {
+        userStore.logout()
+      }
+    }
     return Promise.reject(error)
   },
 )

@@ -10,7 +10,7 @@
       <h1>登录你的账号</h1>
     </div>
     <el-form-item label="账号">
-      <el-input style="width: 240px" v-model="from.username" type="password" autocomplete="off" />
+      <el-input style="width: 240px" v-model="from.username" autocomplete="off" />
     </el-form-item>
     <el-form-item label="密码">
       <el-input style="width: 240px" v-model="from.password" type="password" autocomplete="off" />

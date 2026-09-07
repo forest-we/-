@@ -31,10 +31,19 @@ const router = createRouter({
     },
   ],
 })
-router.beforeEach((to, from, next) => {
-      
+router.beforeEach((to) => {
+  const token = localStorage.getItem('token')
+  const protectedPaths = ['/', '/userData']
 
+  console.log('守卫执行 to.path=', to.path)
+  console.log('token=', token)
+  console.log('!token=', !token)
+  console.log('数组是否包含路径：', protectedPaths.includes(to.path))
 
-
+  if ((!token || token === 'null') && protectedPaths.includes(to.path)) {
+    console.log('触发重定向到login')
+    return '/login'
+  }
 })
+
 export default router

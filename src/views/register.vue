@@ -19,6 +19,9 @@
       />
     </el-form-item>
     <el-button @click="regiser()" type="primary">注册</el-button>
+    <div>
+      <el-button @click="login">有账号????</el-button>
+    </div>
   </div>
 </template>
 
@@ -50,6 +53,10 @@ const regiser = async () => {
   } catch {
     ElMessage.error('额,出了点问题')
   }
+}
+
+const login = () => {
+  router.push('/login')
 }
 </script>
 
