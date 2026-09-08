@@ -1,20 +1,10 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div>
-    <el-card v-for="post in postList" :key="post.id" style="max-width: 360px">
-      <div>
-        <div>
-          <p>{{ post.username }}</p>
-        </div>
-        <div>
-          <el-button @click="rou(post)">{{ post.title }}</el-button>
-        </div>
-        <div>
-          <p>
-            {{ '发布时间  ' + post.create_time }}
-          </p>
-        </div>
-      </div>
+  <div class="feed">
+    <el-card v-for="post in postList" :key="post.id" class="post-card">
+      <div class="post-author">{{ post.username }}</div>
+      <el-button class="post-title" @click="rou(post)">{{ post.title }}</el-button>
+      <p class="post-time">{{ '发布时间  ' + post.create_time }}</p>
     </el-card>
   </div>
 </template>
@@ -48,12 +38,82 @@ const rou = (post: any) => {
 }
 </script>
 
-<style>
-#er {
-  text-align: center;
-  width: 100%;
+<style scoped>
+/* 知乎式窄列帖子流 */
+.feed {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
-.tt {
-  max-width: 600px;
+
+.post-card {
+  border-radius: 14px;
+  transition:
+    box-shadow 0.25s ease,
+    transform 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.post-card:hover {
+  border-color: var(--line);
+  box-shadow: var(--shadow-warm);
+  transform: translateY(-2px);
+}
+
+.post-card :deep(.el-card__body) {
+  padding: 18px 22px;
+}
+
+/* 作者行:荧光黄菱形小点 */
+.post-author {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  color: var(--ink-2);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+}
+
+.post-author::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  background: var(--acid);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+/* 标题:正文级按钮,悬停荧光黄下划线 */
+.post-title {
+  height: auto;
+  padding: 0;
+  border: none;
+  background: transparent;
+  white-space: normal;
+  text-align: left;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: var(--ink);
+  transition: color 0.2s ease;
+}
+
+.post-title:hover {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--acid);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 5px;
+}
+
+.post-time {
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: var(--ink-3);
+  letter-spacing: 0.05em;
 }
 </style>

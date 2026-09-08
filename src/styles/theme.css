@@ -1,0 +1,223 @@
+/* ============================================================
+   贴吧 · 暖纸墨版全局主题
+   暖调纸色为底 / 荧光黄点缀 / 低对比柔和分割线
+   布局参照知乎:顶部通栏、窄内容列、卡片式帖子流
+   ============================================================ */
+
+:root {
+  /* ---- 纸色 ---- */
+  --paper: #f5efe1;
+  --paper-deep: #ede3cf;
+  --card: #fdfaf2;
+  --card-deep: #f6f0e0;
+
+  /* ---- 墨色(暖棕) ---- */
+  --ink: #3a3023;
+  --ink-2: #7b6d53;
+  --ink-3: #a4967b;
+
+  /* ---- 低对比分割线 ---- */
+  --line: #e2d8c1;
+  --line-soft: #ece4d0;
+
+  /* ---- 荧光黄 ---- */
+  --acid: #e0f422;
+  --acid-soft: #eff96e;
+  --acid-deep: #c6da12;
+  --acid-ink: #2b3006;
+
+  /* ---- 暖阴影 ---- */
+  --shadow-warm: 0 1px 2px rgb(104 82 42 / 6%), 0 14px 30px -16px rgb(104 82 42 / 18%);
+
+  /* ---- Element Plus 语义色映射到纸墨体系 ---- */
+  --el-color-primary: #463a28; /* 主色用暖墨,保证白字对比度 */
+  --el-bg-color: var(--card);
+  --el-bg-color-page: var(--paper);
+  --el-border-color: var(--line);
+  --el-border-color-light: var(--line-soft);
+  --el-border-color-lighter: var(--line-soft);
+  --el-fill-color-light: var(--card-deep);
+  --el-fill-color-blank: #fffdf4;
+  --el-text-color-primary: var(--ink);
+  --el-text-color-regular: var(--ink-2);
+  --el-text-color-secondary: var(--ink-3);
+  --el-border-radius-base: 8px;
+  --el-font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei',
+    'Segoe UI', Roboto, sans-serif;
+
+  --el-menu-bg-color: transparent;
+  --el-menu-active-color: var(--ink);
+  --el-menu-hover-bg-color: transparent;
+  --el-card-border-radius: 14px;
+  --el-card-border-color: var(--line-soft);
+  --el-card-bg-color: var(--card);
+  --el-dialog-bg-color: var(--card);
+  --el-input-bg-color: #fffdf4;
+  --el-input-border-color: var(--line);
+  --el-input-focus-border-color: var(--acid-deep);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--ink);
+  background:
+    radial-gradient(1100px 500px at 85% -10%, rgb(224 244 34 / 7%), transparent 60%),
+    linear-gradient(180deg, #f8f2e4 0%, var(--paper) 40%, var(--paper-deep) 100%);
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'Segoe UI', Roboto, sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--acid);
+  color: var(--acid-ink);
+}
+
+a {
+  color: inherit;
+}
+
+/* 中文衬线标题工具类,营造杂志感 */
+.serif-title {
+  font-family: Georgia, 'Songti SC', 'SimSun', serif;
+  letter-spacing: 0.06em;
+}
+
+/* ============================================================
+   按钮
+   ============================================================ */
+.el-button {
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+/* 主按钮:荧光黄底 + 深色字 */
+.el-button--primary {
+  --el-button-bg-color: var(--acid);
+  --el-button-border-color: var(--acid);
+  --el-button-text-color: var(--acid-ink);
+  --el-button-hover-bg-color: var(--acid-soft);
+  --el-button-hover-border-color: var(--acid-soft);
+  --el-button-hover-text-color: var(--acid-ink);
+  --el-button-active-bg-color: var(--acid-deep);
+  --el-button-active-border-color: var(--acid-deep);
+  --el-button-active-text-color: var(--acid-ink);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+/* 次要按钮:透明纸感 */
+.el-button--default {
+  --el-button-bg-color: transparent;
+  --el-button-border-color: var(--line);
+  --el-button-text-color: var(--ink-2);
+  --el-button-hover-bg-color: var(--card-deep);
+  --el-button-hover-border-color: var(--line);
+  --el-button-hover-text-color: var(--ink);
+  --el-button-active-bg-color: var(--card-deep);
+}
+
+/* info:安静灰,用于取消类 */
+.el-button--info {
+  --el-button-bg-color: transparent;
+  --el-button-border-color: var(--line);
+  --el-button-text-color: var(--ink-3);
+  --el-button-hover-bg-color: var(--card-deep);
+  --el-button-hover-border-color: var(--line);
+  --el-button-hover-text-color: var(--ink-2);
+}
+
+/* ============================================================
+   顶部横向菜单(知乎式:n 无底、悬停/选中时荧光黄下划线)
+   ============================================================ */
+.el-menu--horizontal {
+  border-bottom: none !important;
+}
+
+.el-menu--horizontal .el-menu-item {
+  border-bottom: 2px solid transparent;
+  color: var(--ink-2);
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.el-menu--horizontal .el-menu-item:hover {
+  background: transparent;
+  border-bottom-color: var(--acid);
+  color: var(--ink);
+}
+
+.el-menu--horizontal .el-menu-item.is-active {
+  border-bottom-color: var(--acid);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* ============================================================
+   卡片 / 弹窗 / 遮罩
+   ============================================================ */
+.el-card {
+  border: 1px solid var(--line-soft);
+  box-shadow: 0 1px 2px rgb(104 82 42 / 4%);
+  background: var(--card);
+}
+
+.el-dialog {
+  width: min(460px, calc(100vw - 48px));
+  border-radius: 18px;
+  box-shadow: 0 24px 60px -24px rgb(58 48 35 / 35%);
+}
+
+.el-dialog .el-form-item__label {
+  color: var(--ink-2);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+}
+
+.el-dialog .el-dialog__footer {
+  padding-top: 8px;
+}
+
+.el-dialog__title {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.el-overlay {
+  background-color: rgb(58 48 35 / 25%);
+  backdrop-filter: blur(3px);
+}
+
+/* 输入框:纸面 + 荧光黄聚焦圈 */
+.el-input__wrapper,
+.el-textarea__inner {
+  background-color: #fffdf4;
+  box-shadow: 0 0 0 1px var(--line) inset !important;
+  border-radius: 10px;
+  transition: box-shadow 0.2s ease;
+}
+
+.el-input__wrapper.is-focus,
+.el-textarea__inner:focus {
+  box-shadow: 0 0 0 1.5px var(--acid-deep) inset !important;
+}
+
+.el-input__inner,
+.el-textarea__inner {
+  color: var(--ink);
+}
