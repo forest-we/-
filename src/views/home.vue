@@ -35,23 +35,19 @@ interface Postlist{
   create_time:Number
 }
 const postList = ref<Postlist[]>([])
-// onMounted(() => {
-//   postGet()
-// })
-//暂时模拟数据
-// const postGet = async () => {
-//   try {
-//     const res = await axios.get('post/list')
-//     postList.value = res.data.data
-//   } catch {
-//     ElMessage.error('额,出了点问题')
-//   }
-// }
-const data = [
-  {id:1, username:'乐乐',title:'学习性的', create_time:202421},
-  {id:2, username:'linns', title:'我无处不在',create_time:202492}
-]
-postList.value = data
+onMounted(() => {
+  postGet()
+})
+
+const postGet = async () => {
+  try {
+    const res = await axios.get('post/list')
+    postList.value = res.data.data
+  } catch {
+    ElMessage.error('额,出了点问题')
+  }
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const rou = (post:any) => {
   router.push(`/userData/${post.id}`)

@@ -23,29 +23,7 @@
 import { ref } from 'vue';
 import { useUserStore } from '@/pinia/user';
 const useStore = useUserStore()
-const geet = (name:string): void =>{
-        console.log('hello', name);
-        
-}
-geet('相似u为')
 
-const fyt = (name?:string, tty?:Number): void =>{
-        console.log('hello', name,  tty);
-        
-}
-fyt('无赖哦·', 123)
-
-interface ex1{
-    x:string,
-    v:Number
-}
-interface ex2 extends ex1{
-     z?:Number
-}
-let ex3: ex2 = {
-    x:'',
-    v:1
-}
 </script>
 
 

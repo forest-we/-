@@ -17,13 +17,13 @@ export const useUserStore = defineStore('user', () => {
     Profile.value = res.data.data.profile
     localStorage.setItem('token', token.value)
     localStorage.setItem('username', username.value)
-    localStorage.setItem('Profile', Profile.value)
+    localStorage.setItem('profile', Profile.value)
   }
 
   const logout = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('username')
-    localStorage.removeItem('Profile')
+    localStorage.removeItem('profile')
     Profile.value = ''
     username.value = ''
     userCode.value = ''

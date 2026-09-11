@@ -18,6 +18,15 @@
 
     <section class="comments">
       <h3 class="comments-title">评论区</h3>
+      <div>
+         <el-input
+      style="width: 600px"
+      :rows="2"
+      type="textarea"
+      placeholder="Please input"
+  />
+      </div>
+       <div class="kile"><el-button class="uui">发布</el-button></div>
       <p class="comments-empty">{{}}</p>
     </section>
   </article>
@@ -39,7 +48,7 @@ interface Post{
 const postData = ref<Post>({
   username: '',
   title: '',
-  content: ''
+  content: '',
 })
 
 
@@ -136,5 +145,13 @@ onMounted(() => {
   margin: 0;
   color: var(--ink-3);
   font-size: 13px;
+}
+.kile{
+  padding: 10px;
+  display: flex;
+}
+.uui{
+  display: flex;
+  align-items: flex-end;
 }
 </style>
