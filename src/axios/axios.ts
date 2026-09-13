@@ -32,13 +32,16 @@ service.interceptors.response.use(
   function (error) {
     const userStore = useUserStore()
     if (error.response?.status === 401) {
-      const publicPages = ['login', 'register']
+      const publicPages = ['/login', '/register']
       if (!publicPages.includes(window.location.pathname)) {
         userStore.logout()
-      }
-      if(error.response?.status === 500){
+        ElMessage.error(error.response?.data.message)
+      } else {
         ElMessage.error(error.response?.data.message)
       }
+    }
+    if (error.response?.status === 500) {
+      ElMessage.error(error.response?.data.message)
     }
     return Promise.reject(error)
   },

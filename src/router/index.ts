@@ -30,10 +30,10 @@ const router = createRouter({
       meta: { showNav: false },
     },
     {
-      path:'/user',
+      path: '/user',
       name: '用户主页',
-      component: user
-    }
+      component: user,
+    },
   ],
 })
 router.beforeEach((to) => {
@@ -42,7 +42,7 @@ router.beforeEach((to) => {
   if ((!token || token === 'null') && (to.path === '/' || to.path.startsWith('/userData'))) {
     return '/login'
   }
-  if(!token && to.path === '/user'){
+  if (!token && to.path === '/user') {
     return '/login'
   }
 })

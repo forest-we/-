@@ -2,7 +2,11 @@
 <template>
   <article class="detail">
     <header class="detail-head">
-      <el-avatar class="author-avatar" :size="52" src="https://ts2.tc.mm.bing.net/th/id/OIP-C.5XpzGKbBQBM5d2VsJq-GZAAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3">
+      <el-avatar
+        class="author-avatar"
+        :size="52"
+        src="https://ts2.tc.mm.bing.net/th/id/OIP-C.5XpzGKbBQBM5d2VsJq-GZAAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
+      >
         <el-icon><User /></el-icon>
       </el-avatar>
       <p class="author-name">{{ '作者: ' + postData.username }}</p>
@@ -19,15 +23,22 @@
     <section class="comments">
       <h3 class="comments-title">评论区</h3>
       <div>
-         <el-input
-      style="width: 600px"
-      :rows="2"
-      type="textarea"
-      placeholder="Please input"
-  />
+        <el-input
+          style="width: 700px"
+          :rows="2"
+          type="textarea"
+          v-model="commenT.content"
+          placeholder="Please input"
+        />
       </div>
-       <div class="kile"><el-button class="uui">发布</el-button></div>
-      <p class="comments-empty">{{}}</p>
+      <div class="kile"><el-button class="uui" @click="commentPost">发布</el-button></div>
+      <el-card class="ghg" v-for="comment in postComments" :key="comment.id">
+        <div>
+          <p>{{ comment.username }}</p>
+        </div>
+        <div>{{ comment.content }}</div>
+        <p>{{ comment.create_time }}</p>
+      </el-card>
     </section>
   </article>
 </template>
@@ -36,14 +47,16 @@
 import { useRoute } from 'vue-router'
 import axios from '@/axios/axios'
 import { onMounted, ref } from 'vue'
+import { ElMessage } from 'element-plus'
+
 const route = useRoute()
-const postId = route.params.id 
+const postId = route.params.id
 console.log(postId)
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-interface Post{
-  username:string
-  title:string
-  content:string
+
+interface Post {
+  username: string
+  title: string
+  content: string
 }
 const postData = ref<Post>({
   username: '',
@@ -51,16 +64,54 @@ const postData = ref<Post>({
   content: '',
 })
 
+interface Comm {
+  id: number
+  content: string
+  create_time: number
+  username: string
+  avatar: string
+}
+const postComments = ref<Comm[]>([])
 
+const commenT = ref({
+  post_id: postId,
+  content: '',
+})
+const commentPost = async () => {
+  try {
+    if (!commenT.value.content || !commenT.value.post_id) {
+      return ElMessage.error('评论不能为空')
+    }
 
+    const res = await axios.post('admin/comment', commenT.value)
+    if (res.data.code === 200) {
+      ElMessage({
+        message: '发布成功',
+        type: 'success',
+      })
+      postComment()
+    }
+  } catch {
+    ElMessage.error('发布时出了点问题')
+  }
+}
 
 const postGet = async () => {
   const res = await axios.get(`/post/list/${postId}`)
   postData.value = res.data.data
   console.log(res.data.data)
 }
+const postComment = async () => {
+  const res = await axios.get('/admin/comment', {
+    params: {
+      postId: postId,
+    },
+  })
+  postComments.value = res.data.data
+}
 onMounted(() => {
   postGet()
+  postComment()
 })
 </script>
 
@@ -146,11 +197,11 @@ onMounted(() => {
   color: var(--ink-3);
   font-size: 13px;
 }
-.kile{
+.kile {
   padding: 10px;
   display: flex;
 }
-.uui{
+.uui {
   display: flex;
   align-items: flex-end;
 }

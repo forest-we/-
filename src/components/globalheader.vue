@@ -7,27 +7,30 @@
         <el-menu-item index="/">推荐</el-menu-item>
         <el-menu-item index="2">关注</el-menu-item>
         <el-menu-item index="3">热榜</el-menu-item>
-          <el-sub-menu index="1">
-        <template #title> <el-avatar class="author-avatar" :size="45" src="https://ts2.tc.mm.bing.net/th/id/OIP-C.5XpzGKbBQBM5d2VsJq-GZAAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3">
-    <el-icon><User /></el-icon>
-    </el-avatar></template>
+        <el-sub-menu index="1">
+          <template #title>
+            <el-avatar
+              class="author-avatar"
+              :size="45"
+              src="https://ts2.tc.mm.bing.net/th/id/OIP-C.5XpzGKbBQBM5d2VsJq-GZAAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
+            >
+              <el-icon><User /></el-icon> </el-avatar
+          ></template>
           <el-menu-item index="/user">个人主页</el-menu-item>
           <el-menu-item @click="useStore.logout">退出登录</el-menu-item>
-      </el-sub-menu>
-        </el-menu>
+        </el-sub-menu>
+      </el-menu>
     </div>
     <div>
       <div>
-        <el-input
-          class="responsive-input"
-          placeholder="Type something"
-          :prefix-icon="Search"
-        />
+        <el-input class="responsive-input" placeholder="Type something" :prefix-icon="Search" />
       </div>
     </div>
     <div class="gh-right">
       <el-button class="gh-post" @click="postClos" :icon="Edit" />
-      <el-button v-if="!useStore.token" class="gh-login" type="primary" @click="Login">登录</el-button>
+      <el-button v-if="!useStore.token" class="gh-login" type="primary" @click="Login"
+        >登录</el-button
+      >
     </div>
   </div>
   <post ref="postss" />
@@ -38,9 +41,10 @@ import post from '@/post/post.vue'
 import { Edit, Search } from '@element-plus/icons-vue'
 import router from '@/router'
 import { ref } from 'vue'
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-import {useUserStore} from '@/pinia/user'
+
+import { useUserStore } from '@/pinia/user'
 const useStore = useUserStore()
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const postss = ref<any>(null)
 const postClos = () => {
   postss.value?.clos()

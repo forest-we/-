@@ -1,5 +1,3 @@
-// oxlint-disable unicorn/no-empty-file
-// oxlint-disable-next-line no-unused-vars unicorn/no-empty-file
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import axios from '@/axios/axios'

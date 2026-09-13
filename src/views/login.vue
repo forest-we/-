@@ -34,30 +34,23 @@ const from = ref<User>({
   password: '',
 })
 
-
-
-
 const logg = async () => {
-  try {
-    if (!from.value.password || !from.value.username) {
-      return ElMessage.error('账号密码为空')
-    }
-    await userStore.Login(from.value)
-    if (userStore.userCode === 401) {
-      return ElMessage.error('账号密码错误')
-    }
-    if (userStore.userCode === 200) {
-      ElMessage({
-        message: '欢迎你,' + userStore.username,
-        type: 'success',
-      })
-      router.push('/')
-    }
-  } catch {
-    ElMessage.error('出了点问题')
+  if (!from.value.password || !from.value.username) {
+    return ElMessage.error('账号密码为空')
+  }
+  await userStore.Login(from.value)
+  if (userStore.userCode === 401) {
+    return ElMessage.error('账号密码错误')
+  }
+  if (userStore.userCode === 200) {
+    ElMessage({
+      message: '欢迎你,' + userStore.username,
+      type: 'success',
+    })
+    router.push('/')
   }
 }
-const regiser = ():void => {
+const regiser = (): void => {
   router.push('/register')
 }
 </script>

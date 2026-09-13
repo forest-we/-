@@ -1,18 +1,22 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="feed" v-if="postList.length">
-    <el-card v-for="post in postList" :key="post.id" class="post-card">
-       <el-avatar class="author-avatar" :size="35" src="https://ts2.tc.mm.bing.net/th/id/OIP-C.5XpzGKbBQBM5d2VsJq-GZAAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3">
-    <el-icon><User /></el-icon>
-    </el-avatar>
+  <div class="feed" v-if="postStore.postList.length">
+    <el-card v-for="post in postStore.postList" :key="post.id" class="post-card">
+      <el-avatar
+        class="author-avatar"
+        :size="35"
+        src="https://ts2.tc.mm.bing.net/th/id/OIP-C.5XpzGKbBQBM5d2VsJq-GZAAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
+      >
+        <el-icon><User /></el-icon>
+      </el-avatar>
       <div class="post-author">{{ post.username }}</div>
       <el-button class="post-title" @click="rou(post)">{{ post.title }}</el-button>
       <p class="post-time">{{ '发布时间  ' + post.create_time }}</p>
     </el-card>
   </div>
- 
-   <div class="feed" v-else>
-    <el-card  class="post-card">
+
+  <div class="feed" v-else>
+    <el-card class="post-card">
       <div class="post-author"></div>
       <el-button class="post-title">暂时没有帖子呢</el-button>
       <p class="post-time"></p>
@@ -22,34 +26,17 @@
 
 // eslint-disable-next-line vue/block-lang
 <script setup lang="ts">
-import axios from '@/axios/axios'
 import router from '@/router'
-import { ElMessage } from 'element-plus'
-import { ref } from 'vue'
-import { onMounted } from 'vue'
 
-interface Postlist{
-  id:Number
-  username:string,
-  title:string
-  create_time:Number
-}
-const postList = ref<Postlist[]>([])
+import { onMounted } from 'vue'
+import { usePostStore } from '@/pinia/post'
+const postStore = usePostStore()
 onMounted(() => {
-  postGet()
+  postStore.getlist()
 })
 
-const postGet = async () => {
-  try {
-    const res = await axios.get('post/list')
-    postList.value = res.data.data
-  } catch {
-    ElMessage.error('额,出了点问题')
-  }
-}
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const rou = (post:any) => {
+const rou = (post: any) => {
   router.push(`/userData/${post.id}`)
 }
 </script>
