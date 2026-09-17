@@ -12,9 +12,9 @@
       <div class="post-author">{{ post.username }}</div>
       <el-button class="post-title" @click="rou(post)">{{ post.title }}</el-button>
       <p class="post-time">{{ '发布时间  ' + post.create_time }}</p>
+      
     </el-card>
   </div>
-
   <div class="feed" v-else>
     <el-card class="post-card">
       <div class="post-author"></div>
@@ -27,9 +27,10 @@
 // eslint-disable-next-line vue/block-lang
 <script setup lang="ts">
 import router from '@/router'
-
 import { onMounted } from 'vue'
 import { usePostStore } from '@/pinia/post'
+import { ref } from 'vue'
+
 const postStore = usePostStore()
 onMounted(() => {
   postStore.getlist()
@@ -39,6 +40,8 @@ onMounted(() => {
 const rou = (post: any) => {
   router.push(`/userData/${post.id}`)
 }
+
+
 </script>
 
 <style scoped>

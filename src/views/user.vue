@@ -2,13 +2,22 @@
 <template>
   <div id="rt">
     <div>
-      <el-avatar
+   
+     <el-tooltip  content="点击修改头像" placement="top">
+   <el-upload  
+                action=""
+                :http-request="up">
+ <el-avatar
         class="author-avatar"
         :size="52"
-        src="https://ts2.tc.mm.bing.net/th/id/OIP-C.5XpzGKbBQBM5d2VsJq-GZAAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
+        :src="useAvatar.avatar"
+       
       >
         <el-icon><User /></el-icon>
+        
       </el-avatar>
+      </el-upload>
+     </el-tooltip>
     </div>
     <div>
       <h1>
@@ -18,13 +27,50 @@
     <div class="jianjei">
       <p>{{ useStore.Profile }}</p>
     </div>
+    <div>
+        <el-button type="primary" @click="adDuser" :icon="Edit" circle />
+    </div>
   </div>
+  <addUser ref="adD" />
 </template>
 
 <script setup lang="ts">
 import { useUserStore } from '@/pinia/user'
-
+import {
+  Check,
+  Delete,
+  Edit,
+  Message,
+  Search,
+  Star,
+  User,
+} from '@element-plus/icons-vue'
+import addUser from '@/components/add-user.vue';
+import { onMounted, ref } from 'vue';
+import axios from '@/axios/axios';
+import { useAvaterStore } from '@/pinia/avatar';
+const useAvatar = useAvaterStore()
 const useStore = useUserStore()
+
+onMounted(() => {
+  useAvatar.avatarPost()
+})
+
+const up = async (upload: any) =>{
+     const file = upload.file
+     console.log(file);
+     const formee = new FormData()
+     formee.append('avatar', file)
+     const res = await axios.post('upload', formee)
+     useAvatar.avatar = res.data.url
+}
+
+
+
+const adD = ref<any>(null)
+const adDuser = () =>{
+    adD.value.addClose()
+}
 </script>
 
 <style>

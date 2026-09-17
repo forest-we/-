@@ -3,7 +3,7 @@ import { useUserStore } from '@/pinia/user'
 import { ElMessage } from 'element-plus'
 
 const service = axios.create({
-  baseURL: 'http://localhost:3400/',
+  baseURL: 'http://localhost:5600/',
   timeout: 5000,
 })
 
@@ -41,6 +41,9 @@ service.interceptors.response.use(
       }
     }
     if (error.response?.status === 500) {
+      ElMessage.error(error.response?.data.message)
+    }
+    if(error.response?.status === 400){
       ElMessage.error(error.response?.data.message)
     }
     return Promise.reject(error)

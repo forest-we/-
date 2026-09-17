@@ -83,7 +83,7 @@ const commentPost = async () => {
       return ElMessage.error('评论不能为空')
     }
 
-    const res = await axios.post('admin/comment', commenT.value)
+    const res = await axios.post('comment/create', commenT.value)
     if (res.data.code === 200) {
       ElMessage({
         message: '发布成功',
@@ -97,14 +97,18 @@ const commentPost = async () => {
 }
 
 const postGet = async () => {
-  const res = await axios.get(`/post/list/${postId}`)
+  const res = await axios.get('post/detail', {
+    params:{
+      post_id:postId
+    }
+  })
   postData.value = res.data.data
   console.log(res.data.data)
 }
 const postComment = async () => {
-  const res = await axios.get('/admin/comment', {
+  const res = await axios.get('comment/list', {
     params: {
-      postId: postId,
+      post_id: postId,
     },
   })
   postComments.value = res.data.data

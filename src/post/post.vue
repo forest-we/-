@@ -31,7 +31,7 @@ const from = ref({
 })
 const Post = async () => {
   try {
-    const res = await axios.post('admin/post', from.value)
+    const res = await axios.post('post/create', from.value)
     if (res.data.code === 200) {
       ElMessage({
         message: '发布成功',

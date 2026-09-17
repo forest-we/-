@@ -12,7 +12,7 @@
             <el-avatar
               class="author-avatar"
               :size="45"
-              src="https://ts2.tc.mm.bing.net/th/id/OIP-C.5XpzGKbBQBM5d2VsJq-GZAAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
+              :src="useAvatar.avatar"
             >
               <el-icon><User /></el-icon> </el-avatar
           ></template>
@@ -23,7 +23,7 @@
     </div>
     <div>
       <div>
-        <el-input class="responsive-input" placeholder="Type something" :prefix-icon="Search" />
+        <el-input  class="responsive-input" placeholder="模糊搜索帖子" :prefix-icon="Search" maxlength="10"/>
       </div>
     </div>
     <div class="gh-right">
@@ -38,12 +38,13 @@
 
 <script setup lang="ts">
 import post from '@/post/post.vue'
-import { Edit, Search } from '@element-plus/icons-vue'
+import { Edit, Search, User } from '@element-plus/icons-vue'
 import router from '@/router'
 import { ref } from 'vue'
-
+import { useAvaterStore } from '@/pinia/avatar'
 import { useUserStore } from '@/pinia/user'
 const useStore = useUserStore()
+const useAvatar = useAvaterStore()
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const postss = ref<any>(null)
 const postClos = () => {
