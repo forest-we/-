@@ -1,7 +1,6 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="feed" v-if="postStore.postList.length">
-    <el-card v-for="post in postStore.postList" :key="post.id" class="post-card">
+<div class="feed" v-if="followS.followData.length">
+    <el-card v-for="post in followS.followData" :key="post.id" class="post-card">
       <div class="post-author">{{ post.username }}</div>
       <el-button class="post-title" @click="rou(post)">{{ post.title }}</el-button>
       <p class="post-time">{{ '发布时间  ' + post.create_time }}</p>
@@ -11,21 +10,22 @@
   <div class="feed" v-else>
     <el-card class="post-card">
       <div class="post-author"></div>
-      <el-button class="post-title">暂时没有帖子呢</el-button>
+      <el-button class="post-title">暂时没有帖子呢,或者你根本没关注任何人</el-button>
       <p class="post-time"></p>
     </el-card>
   </div>
-  <div>                             
-  <pagination :page="page" :limit="limit" :total="postStore.total" @pageChangs="changePage" />
+  <div>
+      <pagination  :limit="limit" :page="page" :total="followS.total" @pageChangs="changePage" />
   </div>
 </template>
 
-// eslint-disable-next-line vue/block-lang
 <script setup lang="ts">
-import router from '@/router'
-import { onMounted } from 'vue'
-import pagination from '@/components/pagination.vue'
-import { usePostStore } from '@/pinia/post'
+import { useFollow } from '@/pinia/follow';
+import router from '@/router';
+import pagination from '@/components/pagination.vue';
+import { onMounted } from 'vue';
+
+
 import {
   Check,
   Delete,
@@ -34,45 +34,31 @@ import {
   Search,
   Star,
 } from '@element-plus/icons-vue'
-import { ref } from 'vue'
-import { useAvaterStore } from '@/pinia/avatar'
-import axios from '@/axios/axios'
-const useAvatar = useAvaterStore()
-const postStore = usePostStore()
-onMounted(() => {
-  postStore.getlist()
-  useAvatar.avatarPost()
+import axios from '@/axios/axios';
+import { ref } from 'vue';
+const followS = useFollow()
+onMounted(()=>{
+    followS.follow()
 })
-const page = ref(1)
+  
 const limit = ref(10)
-
-
+const page = ref(1)
 const changePage = (pageS:number) =>{
     page.value = pageS
-    postStore.getlist(page.value, limit.value)   //如果传入的参数和默认参数不一样会覆盖
+    followS.follow(page.value, limit.value)   //如果传入的参数和默认参数不一样会覆盖
  }
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const rou = (post: any) => {
-  router.push(`/userData/${post.id}`)
+
+
+const rou = (post:any) =>{
+        router.push(`/userData/${post.id}`)
 }
 const like = async (post: any) =>{
-   await axios.post('/like', {post_id:post.id})
-   postStore.getlist()
+    await axios.post('/like', {post_id:post.id})
 }
 
 </script>
 
 <style scoped>
-/* 知乎式窄列帖子流 */
-.feed {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 0 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
 .post-card {
   border-radius: 14px;
   transition:
@@ -90,8 +76,14 @@ const like = async (post: any) =>{
 .post-card :deep(.el-card__body) {
   padding: 18px 22px;
 }
-
-/* 作者行:荧光黄菱形小点 */
+.feed {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
 .post-author {
   display: flex;
   align-items: center;

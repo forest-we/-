@@ -41,10 +41,10 @@ service.interceptors.response.use(
       }
     }
     if (error.response?.status === 500) {
-      ElMessage.error(error.response?.data.message)
+      ElMessage.error(error.response?.data.message || '额,网络出了点问题')
     }
     if(error.response?.status === 400){
-      ElMessage.error(error.response?.data.message)
+      ElMessage.error(error.response?.data.message || '数据格式错误')
     }
     return Promise.reject(error)
   },

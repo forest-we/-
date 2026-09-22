@@ -3,10 +3,11 @@
   <div class="gh" v-if="$route.meta.showNav !== false">
     <div class="gh-left">
       <span class="wordmark serif-title">聊吧</span>
-      <el-menu :ellipsis="false" class="gh-menu" mode="horizontal" :router="true">
+      <el-menu :ellipsis="false" class="gh-menu" mode="horizontal" :router="true" :default-active="activeMenu">
         <el-menu-item index="/">推荐</el-menu-item>
-        <el-menu-item index="2">关注</el-menu-item>
+        <el-menu-item index="/follow">关注</el-menu-item>
         <el-menu-item index="3">热榜</el-menu-item>
+        <el-menu-item index="/photo">图吧</el-menu-item>
         <el-sub-menu index="1">
           <template #title>
             <el-avatar
@@ -17,7 +18,7 @@
               <el-icon><User /></el-icon> </el-avatar
           ></template>
           <el-menu-item index="/user">个人主页</el-menu-item>
-          <el-menu-item @click="useStore.logout">退出登录</el-menu-item>
+          <el-menu-item index="logout" @click="useStore.logout">退出登录</el-menu-item>
         </el-sub-menu>
       </el-menu>
     </div>
@@ -40,10 +41,22 @@
 import post from '@/post/post.vue'
 import { Edit, Search, User } from '@element-plus/icons-vue'
 import router from '@/router'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useRoute } from 'vue-router'
 import { useAvaterStore } from '@/pinia/avatar'
 import { useUserStore } from '@/pinia/user'
 const useStore = useUserStore()
+const route = useRoute()
+// 高亮菜单和当前路由绑定：刷新/切换都不会丢
+const activeMenu = computed(() => {
+  const p = route.path   
+  if (p === '/' || p.startsWith('/userData')) return '/' // 详情页归属推荐流
+  if (p.startsWith('/follow')) return '/follow'
+  if (p.startsWith('/user')) return '/user'
+  if (p.startsWith('/3')) return '3'
+  if (p.startsWith('/4')) return '4'
+  return ''
+})
 const useAvatar = useAvaterStore()
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const postss = ref<any>(null)

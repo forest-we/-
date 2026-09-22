@@ -4,6 +4,8 @@ import UserData from '@/views/userData.vue'
 import Login from '@/views/login.vue'
 import register from '@/views/register.vue'
 import user from '@/views/user.vue'
+import Follow from '@/views/follow.vue'
+import Photo from '@/views/photo.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -34,12 +36,22 @@ const router = createRouter({
       name: '用户主页',
       component: user,
     },
+    {
+      path: '/follow',
+      name: '关注页',
+      component: Follow
+    },
+    {
+      path: '/photo',
+      name: '图吧页',
+      component: Photo
+    }
   ],
 })
 router.beforeEach((to) => {
   const token = localStorage.getItem('token')
   // 首页和帖子详情页都需要登录,详情页路径形如 /userData/123,所以用前缀匹配
-  if ((!token || token === 'null') && (to.path === '/' || to.path.startsWith('/userData'))) {
+  if ((!token || token === 'null') && (to.path === '/' || to.path.startsWith('/userData') || to.path === '/follow')) {
     return '/login'
   }
   if (!token && to.path === '/user') {

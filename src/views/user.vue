@@ -9,8 +9,9 @@
                 :http-request="up">
  <el-avatar
         class="author-avatar"
-        :size="52"
+        :size="120"
         :src="useAvatar.avatar"
+        
        
       >
         <el-icon><User /></el-icon>
@@ -18,6 +19,8 @@
       </el-avatar>
       </el-upload>
      </el-tooltip>
+    </div>
+    <div>
     </div>
     <div>
       <h1>
@@ -32,10 +35,12 @@
     </div>
   </div>
   <addUser ref="adD" />
+     
 </template>
 
 <script setup lang="ts">
 import { useUserStore } from '@/pinia/user'
+
 import {
   Check,
   Delete,
@@ -71,6 +76,9 @@ const adD = ref<any>(null)
 const adDuser = () =>{
     adD.value.addClose()
 }
+
+
+
 </script>
 
 <style>

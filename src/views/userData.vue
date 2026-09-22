@@ -5,11 +5,12 @@
       <el-avatar
         class="author-avatar"
         :size="52"
-        src="https://ts2.tc.mm.bing.net/th/id/OIP-C.5XpzGKbBQBM5d2VsJq-GZAAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
+        :src="postData.avatar"
       >
         <el-icon><User /></el-icon>
       </el-avatar>
       <p class="author-name">{{ '作者: ' + postData.username }}</p>
+      <el-button type="primary" @click="follow">关注</el-button>
     </header>
 
     <h2 class="detail-title serif-title">{{ postData.title }}</h2>
@@ -34,6 +35,15 @@
       <div class="kile"><el-button class="uui" @click="commentPost">发布</el-button></div>
       <el-card class="ghg" v-for="comment in postComments" :key="comment.id">
         <div>
+          <el-avatar
+        class="author-avatar"
+        :size="52"
+        :src="comment.avatar"
+      >
+        <el-icon><User /></el-icon>
+      </el-avatar>
+        </div>
+        <div>
           <p>{{ comment.username }}</p>
         </div>
         <div>{{ comment.content }}</div>
@@ -49,19 +59,24 @@ import axios from '@/axios/axios'
 import { onMounted, ref } from 'vue'
 import { ElMessage } from 'element-plus'
 
+
 const route = useRoute()
 const postId = route.params.id
 console.log(postId)
 
 interface Post {
+  id:string
   username: string
   title: string
   content: string
+  avatar: string
 }
 const postData = ref<Post>({
+  id:'',
   username: '',
   title: '',
   content: '',
+  avatar: ''
 })
 
 interface Comm {
@@ -95,6 +110,18 @@ const commentPost = async () => {
     ElMessage.error('发布时出了点问题')
   }
 }
+const follow = async () =>{
+  const post_user_id = postData.value.id
+  const res = await axios.post('api/follow', {post_user_id:post_user_id})
+    if(res.data.code === 200){
+      ElMessage({
+        message:res.data.message,
+        type:'success'
+      })
+    }
+}
+
+
 
 const postGet = async () => {
   const res = await axios.get('post/detail', {
@@ -112,6 +139,7 @@ const postComment = async () => {
     },
   })
   postComments.value = res.data.data
+
 }
 onMounted(() => {
   postGet()

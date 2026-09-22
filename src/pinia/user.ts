@@ -23,6 +23,7 @@ export const useUserStore = defineStore('user', () => {
     localStorage.removeItem('token')
     localStorage.removeItem('username')
     localStorage.removeItem('profile')
+    localStorage.removeItem('avatar')
     Profile.value = ''
     username.value = ''
     userCode.value = ''

@@ -7,17 +7,24 @@ interface Postlist {
   username: string
   title: string
   create_time: number
+  post_like_COUNT:number
+  avatar:string
 }
 
 export const usePostStore = defineStore('post', () => {
   const postList = ref<Postlist[]>([])
-  const getlist = async () => {
-    const res = await axios.get('post/list')
+  const total = ref(0)     //分页参数默认值
+  const getlist = async (page = 1, pageSize = 10) => {
+    const res = await axios.get('post/list', {
+      params: { page, pageSize }
+    })
     postList.value = res.data.data
+    total.value = res.data.total
   }
 
   return {
     getlist,
     postList,
+    total
   }
 })
