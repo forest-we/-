@@ -10,7 +10,7 @@
         <el-icon><User /></el-icon>
       </el-avatar>
       <p class="author-name">{{ '作者: ' + postData.username }}</p>
-      <el-button type="primary" @click="follow">关注</el-button>
+      <el-button :type="isFollow ? 'info' : 'primary'" @click="follow">{{ isFollow ? '已关注' : '关注' }}</el-button>
     </header>
 
     <h2 class="detail-title serif-title">{{ postData.title }}</h2>
@@ -110,10 +110,27 @@ const commentPost = async () => {
     ElMessage.error('发布时出了点问题')
   }
 }
+
+// 当前是否已关注该作者
+const isFollow = ref(false)
+
+// 进页面查一次关注状态
+const followStatus = async () => {
+  try {
+    const res = await axios.get('api/follow/status', {
+      params: { post_user_id: postData.value.id },
+    })
+    isFollow.value = res.data.is_follow
+  } catch {
+    // 查不到就保持默认"关注"
+  }
+}
+
 const follow = async () =>{
   const post_user_id = postData.value.id
   const res = await axios.post('api/follow', {post_user_id:post_user_id})
     if(res.data.code === 200){
+      isFollow.value = res.data.is_follow   // 用后端返回的最新状态
       ElMessage({
         message:res.data.message,
         type:'success'
@@ -141,9 +158,10 @@ const postComment = async () => {
   postComments.value = res.data.data
 
 }
-onMounted(() => {
-  postGet()
+onMounted(async () => {
+  await postGet()      // 先拿作者 id
   postComment()
+  followStatus()       // 再查关注状态
 })
 </script>
 

@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div id="rt">
-    <div>
+    <div class="wer">
    
      <el-tooltip  content="点击修改头像" placement="top">
    <el-upload  
@@ -22,11 +22,9 @@
     </div>
     <div>
     </div>
-    <div>
-      <h1>
-        {{ useStore.username }}
-      </h1>
-    </div>
+    
+      <span>{{ useStore.username }}</span>
+    
     <div class="jianjei">
       <p>{{ useStore.Profile }}</p>
     </div>
@@ -83,6 +81,9 @@ const adDuser = () =>{
 
 <style>
 #rt {
-  text-align: center;
+  display: flex;
+}
+.wer{
+  padding: 10px;
 }
 </style>

@@ -1,43 +1,43 @@
 /* ============================================================
-   贴吧 · 暖纸墨版全局主题
-   暖调纸色为底 / 荧光黄点缀 / 低对比柔和分割线
+   知乎 · 清爽白版全局主题
+   白底浅灰为底 / 知乎蓝点缀 / 低对比柔和分割线
    布局参照知乎:顶部通栏、窄内容列、卡片式帖子流
    ============================================================ */
 
 :root {
   /* ---- 纸色 ---- */
-  --paper: #f5efe1;
-  --paper-deep: #ede3cf;
-  --card: #fdfaf2;
-  --card-deep: #f6f0e0;
+  --paper: #f7f8fa;
+  --paper-deep: #eef0f3;
+  --card: #ffffff;
+  --card-deep: #f2f3f5;
 
   /* ---- 墨色(暖棕) ---- */
-  --ink: #3a3023;
-  --ink-2: #7b6d53;
-  --ink-3: #a4967b;
+  --ink: #1f2329;
+  --ink-2: #86909c;
+  --ink-3: #c9cdd4;
 
   /* ---- 低对比分割线 ---- */
-  --line: #e2d8c1;
-  --line-soft: #ece4d0;
+  --line: #e5e6eb;
+  --line-soft: #f0f1f3;
 
   /* ---- 荧光黄 ---- */
-  --acid: #e0f422;
-  --acid-soft: #eff96e;
-  --acid-deep: #c6da12;
-  --acid-ink: #2b3006;
+  --acid: #0084ff;
+  --acid-soft: #4aa5ff;
+  --acid-deep: #0068d6;
+  --acid-ink: #ffffff;
 
   /* ---- 暖阴影 ---- */
-  --shadow-warm: 0 1px 2px rgb(104 82 42 / 6%), 0 14px 30px -16px rgb(104 82 42 / 18%);
+  --shadow-warm: 0 1px 2px rgb(31 35 41 / 5%), 0 14px 30px -16px rgb(31 35 41 / 15%);
 
   /* ---- Element Plus 语义色映射到纸墨体系 ---- */
-  --el-color-primary: #463a28; /* 主色用暖墨,保证白字对比度 */
+  --el-color-primary: #0084ff;
   --el-bg-color: var(--card);
   --el-bg-color-page: var(--paper);
   --el-border-color: var(--line);
   --el-border-color-light: var(--line-soft);
   --el-border-color-lighter: var(--line-soft);
   --el-fill-color-light: var(--card-deep);
-  --el-fill-color-blank: #fffdf4;
+  --el-fill-color-blank: #ffffff;
   --el-text-color-primary: var(--ink);
   --el-text-color-regular: var(--ink-2);
   --el-text-color-secondary: var(--ink-3);
@@ -52,7 +52,7 @@
   --el-card-border-color: var(--line-soft);
   --el-card-bg-color: var(--card);
   --el-dialog-bg-color: var(--card);
-  --el-input-bg-color: #fffdf4;
+  --el-input-bg-color: #ffffff;
   --el-input-border-color: var(--line);
   --el-input-focus-border-color: var(--acid-deep);
 }
@@ -73,8 +73,8 @@ body {
   min-height: 100vh;
   color: var(--ink);
   background:
-    radial-gradient(1100px 500px at 85% -10%, rgb(224 244 34 / 7%), transparent 60%),
-    linear-gradient(180deg, #f8f2e4 0%, var(--paper) 40%, var(--paper-deep) 100%);
+    /* 清爽白底：去掉黄色光晕 */
+    linear-gradient(180deg, #ffffff 0%, var(--paper) 45%, var(--paper-deep) 100%);
   font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB',
     'Microsoft YaHei', 'Segoe UI', Roboto, sans-serif;
   font-size: 15px;
@@ -83,8 +83,8 @@ body {
 }
 
 ::selection {
-  background: var(--acid);
-  color: var(--acid-ink);
+  background: rgb(0 132 255 / 16%);
+  color: var(--ink);
 }
 
 a {
@@ -105,7 +105,7 @@ a {
   transition: all 0.2s ease;
 }
 
-/* 主按钮:荧光黄底 + 深色字 */
+/* 主按钮:知乎蓝底 + 白字 */
 .el-button--primary {
   --el-button-bg-color: var(--acid);
   --el-button-border-color: var(--acid);
@@ -173,14 +173,14 @@ a {
    ============================================================ */
 .el-card {
   border: 1px solid var(--line-soft);
-  box-shadow: 0 1px 2px rgb(104 82 42 / 4%);
+  box-shadow: 0 1px 2px rgb(31 35 41 / 4%);
   background: var(--card);
 }
 
 .el-dialog {
   width: min(460px, calc(100vw - 48px));
   border-radius: 18px;
-  box-shadow: 0 24px 60px -24px rgb(58 48 35 / 35%);
+  box-shadow: 0 24px 60px -24px rgb(31 35 41 / 30%);
 }
 
 .el-dialog .el-form-item__label {
@@ -199,14 +199,14 @@ a {
 }
 
 .el-overlay {
-  background-color: rgb(58 48 35 / 25%);
+  background-color: rgb(31 35 41 / 25%);
   backdrop-filter: blur(3px);
 }
 
-/* 输入框:纸面 + 荧光黄聚焦圈 */
+/* 输入框:白面 + 蓝色聚焦圈 */
 .el-input__wrapper,
 .el-textarea__inner {
-  background-color: #fffdf4;
+  background-color: #ffffff;
   box-shadow: 0 0 0 1px var(--line) inset !important;
   border-radius: 10px;
   transition: box-shadow 0.2s ease;

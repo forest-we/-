@@ -1,11 +1,13 @@
 <template>
 <el-dialog label="修改主页" v-model="adD" append-to-body>
-    <el-form-item label="用户名">
+        <el-form >
+        <el-form-item label="用户名">
         <el-input v-model="from.username" maxlength="10"  />
-    </el-form-item>
-    <el-form-item label="个人签名">
+        </el-form-item>
+        <el-form-item label="个人签名">
         <el-input v-model="from.profile" />
-    </el-form-item>
+        </el-form-item>
+        </el-form>
     <div>
         <el-button class="auth-submit" type="primary" @click="userAdd">修改</el-button>
     </div>
@@ -14,10 +16,11 @@
 
  
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 import { useUserStore } from '@/pinia/user';
 import axios from '@/axios/axios';
 import { ElMention, ElMessage } from 'element-plus';
+import type { FormInstance, FormRules } from 'element-plus'
 const useStore = useUserStore()
 const adD = ref(false)
 const addClose = () =>{

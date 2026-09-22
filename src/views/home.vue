@@ -15,7 +15,7 @@
       <p class="post-time"></p>
     </el-card>
   </div>
-  <div>                             
+  <div id="tu">                             
   <pagination :page="page" :limit="limit" :total="postStore.total" @pageChangs="changePage" />
   </div>
 </template>
@@ -139,5 +139,10 @@ const like = async (post: any) =>{
   font-size: 12px;
   color: var(--ink-3);
   letter-spacing: 0.05em;
+}
+#tu{
+    display: flex;
+  justify-content: center;
+  padding: 10px;
 }
 </style>
