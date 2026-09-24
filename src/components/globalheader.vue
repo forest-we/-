@@ -6,7 +6,7 @@
       <el-menu :ellipsis="false" class="gh-menu" mode="horizontal" :router="true" :default-active="activeMenu">
         <el-menu-item index="/">推荐</el-menu-item>
         <el-menu-item index="/follow">关注</el-menu-item>
-        <el-menu-item index="3">热榜</el-menu-item>
+        <el-menu-item index="/hot">热榜</el-menu-item>
         <el-menu-item index="/photo">图吧</el-menu-item>
         <el-sub-menu index="1">
           <template #title>
@@ -24,11 +24,11 @@
     </div>
     <div>
       <div>
-        <el-input  class="responsive-input" placeholder="模糊搜索帖子" :prefix-icon="Search" maxlength="10"/>
+        <el-input v-if="route.path !== '/user' && route.path !== '/user/follows'" class="responsive-input" placeholder="模糊搜索帖子" :prefix-icon="Search" maxlength="10"/>
       </div>
     </div>
     <div class="gh-right">
-      <el-button class="gh-post" @click="postClos" :icon="Edit" />
+      <el-button class="gh-post" @click="postClos" :icon="Edit" v-if="route.path !== '/user/follows' && route.path !== '/user'"/>
       <el-button v-if="!useStore.token" class="gh-login" type="primary" @click="Login"
         >登录</el-button
       >
@@ -40,11 +40,12 @@
 <script setup lang="ts">
 import post from '@/post/post.vue'
 import { Edit, Search, User } from '@element-plus/icons-vue'
-import router from '@/router'
+
 import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { useAvaterStore } from '@/pinia/avatar'
+import { useAvatarStore } from '@/pinia/avatar'
 import { useUserStore } from '@/pinia/user'
+import router from '@/router'
 const useStore = useUserStore()
 const route = useRoute()
 // 高亮菜单和当前路由绑定：刷新/切换都不会丢
@@ -52,12 +53,12 @@ const activeMenu = computed(() => {
   const p = route.path   
   if (p === '/' || p.startsWith('/userData')) return '/' // 详情页归属推荐流
   if (p.startsWith('/follow')) return '/follow'
+  if (p.startsWith('/hot')) return '/hot'
   if (p.startsWith('/user')) return '/user'
-  if (p.startsWith('/3')) return '3'
-  if (p.startsWith('/4')) return '4'
   return ''
 })
-const useAvatar = useAvaterStore()
+
+const useAvatar = useAvatarStore()
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const postss = ref<any>(null)
 const postClos = () => {

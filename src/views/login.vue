@@ -66,6 +66,9 @@ const regiser = (): void => {
 }
 
 .auth-card {
+  /* 表单控件统一圆角:以后想调,改这一个值就行 */
+  --auth-radius: 4px;
+
   width: 100%;
   max-width: 380px;
   background: var(--card);
@@ -105,11 +108,16 @@ const regiser = (): void => {
   width: 100%;
 }
 
+/* 输入框边框:覆盖主题默认的 10px 圆角,收成方角 */
+.auth-card :deep(.el-input__wrapper) {
+  border-radius: var(--auth-radius);
+}
+
 .auth-submit {
   width: 100%;
   height: 42px;
   margin-top: 10px;
-  border-radius: 999px;
+  border-radius: var(--auth-radius);
   font-size: 15px;
   letter-spacing: 0.3em;
 }

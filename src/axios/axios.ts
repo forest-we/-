@@ -46,6 +46,12 @@ service.interceptors.response.use(
     if(error.response?.status === 400){
       ElMessage.error(error.response?.data.message || '数据格式错误')
     }
+    // 网络层错误:请求超时、断网、后端未启动等(此时没有 response)
+    if (!error.response) {
+      ElMessage.error(
+        error.code === 'ECONNABORTED' ? '请求超时，请稍后重试' : '网络异常，无法连接服务器',
+      )
+    }
     return Promise.reject(error)
   },
 )

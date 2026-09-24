@@ -14,7 +14,7 @@
       <p class="post-time"></p>
     </el-card>
   </div>
-  <div>
+  <div class="weer">
       <pagination  :limit="limit" :page="page" :total="followS.total" @pageChangs="changePage" />
   </div>
 </template>
@@ -131,5 +131,10 @@ const like = async (post: any) =>{
   font-size: 12px;
   color: var(--ink-3);
   letter-spacing: 0.05em;
+}
+.weer{
+     display: flex;
+  justify-content: center;
+  padding: 10px;
 }
 </style>

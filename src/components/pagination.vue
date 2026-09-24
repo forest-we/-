@@ -1,5 +1,5 @@
 <template>
-<div>                                                                 
+<div >                                                                 
      <el-pagination background layout="prev, pager, next" :total="total" :page-size="limit" :current-page="page" @current-change="changePage"/>
 </div>
 

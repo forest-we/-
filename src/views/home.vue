@@ -35,9 +35,9 @@ import {
   Star,
 } from '@element-plus/icons-vue'
 import { ref } from 'vue'
-import { useAvaterStore } from '@/pinia/avatar'
+import { useAvatarStore } from '@/pinia/avatar'
 import axios from '@/axios/axios'
-const useAvatar = useAvaterStore()
+const useAvatar = useAvatarStore()
 const postStore = usePostStore()
 onMounted(() => {
   postStore.getlist()
