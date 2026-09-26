@@ -3,7 +3,8 @@ import { useUserStore } from '@/pinia/user'
 import { ElMessage } from 'element-plus'
 
 const service = axios.create({
-  baseURL: 'http://localhost:5600/',
+  // 后端地址从 .env.development / .env.production 里读,部署改那两个文件即可
+  baseURL: import.meta.env.VITE_API_BASE,
   timeout: 5000,
 })
 

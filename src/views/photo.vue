@@ -66,6 +66,7 @@ const changePage = (pageS: number) => {
 }
 
 // 上传（http-request 自定义请求，字段名 image 和后端 multer single('image') 对齐）
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ee = async (a: any) => {
   try {
     const file = a.file
@@ -76,7 +77,8 @@ const ee = async (a: any) => {
       ElMessage({ message: '上传成功', type: 'success' })
       photoGet() // 上传完刷新回第一页
     }
-  } catch (err: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (err: unknown) {
     ElMessage.error('上传失败')
   }
 }

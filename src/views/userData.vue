@@ -1,11 +1,7 @@
 <template>
   <article class="detail">
     <header class="detail-head">
-      <el-avatar
-        class="author-avatar"
-        :size="52"
-        :src="postData.avatar"
-      >
+      <el-avatar class="author-avatar" :size="52" :src="postData.avatar">
         <el-icon><User /></el-icon>
       </el-avatar>
       <p class="author-name">{{ '作者: ' + postData.username }}</p>
@@ -31,26 +27,15 @@
       <h3 class="comments-title">评论区</h3>
 
       <div class="comment-editor">
-        <el-input
-          v-model="commenT.content"
-          :rows="3"
-          type="textarea"
-          placeholder="写下你的评论…"
-        />
+        <el-input v-model="commenT.content" :rows="3" type="textarea" placeholder="写下你的评论…" />
         <div class="comment-editor-actions">
           <el-button type="primary" @click="commentPost">发布</el-button>
         </div>
       </div>
 
-      <p v-if="postComments.length === 0" class="comments-empty">
-        还没有评论，来说两句吧
-      </p>
+      <p v-if="postComments.length === 0" class="comments-empty">还没有评论，来说两句吧</p>
 
-      <div
-        v-for="comment in postComments"
-        :key="comment.id"
-        class="comment-item"
-      >
+      <div v-for="comment in postComments" :key="comment.id" class="comment-item">
         <el-avatar class="comment-avatar" :size="40" :src="comment.avatar">
           <el-icon><User /></el-icon>
         </el-avatar>
@@ -62,6 +47,7 @@
           <p class="comment-content">{{ comment.content }}</p>
         </div>
       </div>
+      <pagination :page="page" :limit="pageSize" :total="total" @pagechangs="pagecomment" />
     </section>
   </article>
 </template>
@@ -72,12 +58,14 @@ import { useUserStore } from '@/pinia/user'
 import axios from '@/axios/axios'
 import { onMounted, ref } from 'vue'
 import { ElMessage } from 'element-plus'
-
+import pagination from '@/components/pagination.vue'
 const route = useRoute()
 const userStore = useUserStore()
 const userId = userStore.userId
 const postId = route.params.id
-
+const page = ref(1)
+const pageSize = ref(15)
+const total = ref(0)
 interface Post {
   id: string
   username: string
@@ -90,7 +78,7 @@ const postData = ref<Post>({
   username: '',
   title: '',
   content: '',
-  avatar: ''
+  avatar: '',
 })
 
 interface Comm {
@@ -168,13 +156,22 @@ const postGet = async () => {
     // 失败提示由 axios 拦截器统一弹出
   }
 }
+
 const postComment = async () => {
   const res = await axios.get('comment/list', {
     params: {
       post_id: postId,
+      page: page,
+      pageSize: pageSize,
     },
   })
   postComments.value = res.data.data
+  total.value = res.data.total
+}
+
+const pagecomment = (p: number) => {
+  page.value = p
+  postComment()
 }
 
 // 时间显示:兼容秒/毫秒时间戳与日期字符串,统一为 YYYY-MM-DD HH:mm

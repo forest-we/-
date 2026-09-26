@@ -5,61 +5,70 @@
       <div class="post-author">{{ post.username }}</div>
       <el-button class="post-title" @click="rou(post)">{{ post.title }}</el-button>
       <p class="post-time">{{ '发布时间  ' + post.create_time }}</p>
-       <el-button type="warning" :icon="Star" @click="like(post)" >{{ post.post_like_COUNT }}</el-button> 
+      <el-button type="warning" :icon="Star" @click="like(post)">{{
+        post.post_like_COUNT
+      }}</el-button>
     </el-card>
   </div>
   <div class="feed" v-else>
     <el-card class="post-card">
       <div class="post-author"></div>
-      <el-button class="post-title">暂时没有帖子呢</el-button>
+      <el-button class="post-title">{{
+        postStore.keyword ? '没有找到相关帖子' : '暂时没有帖子呢'
+      }}</el-button>
       <p class="post-time"></p>
     </el-card>
   </div>
-  <div id="tu">                             
-  <pagination :page="page" :limit="limit" :total="postStore.total" @pageChangs="changePage" />
+  <div id="tu">
+    <pagination :page="page" :limit="limit" :total="postStore.total" @pageChangs="changePage" />
   </div>
 </template>
 
 // eslint-disable-next-line vue/block-lang
 <script setup lang="ts">
 import router from '@/router'
-import { onMounted } from 'vue'
+import { onMounted, watch } from 'vue'
 import pagination from '@/components/pagination.vue'
 import { usePostStore } from '@/pinia/post'
-import {
-  Check,
-  Delete,
-  Edit,
-  Message,
-  Search,
-  Star,
-} from '@element-plus/icons-vue'
+import { Star } from '@element-plus/icons-vue'
 import { ref } from 'vue'
 import { useAvatarStore } from '@/pinia/avatar'
 import axios from '@/axios/axios'
 const useAvatar = useAvatarStore()
 const postStore = usePostStore()
 onMounted(() => {
-  postStore.getlist()
+  //带搜索关键词进来时不要拉列表,否则会把搜索结果冲掉
+  if (!postStore.keyword) postStore.getlist()
   useAvatar.avatarPost()
 })
 const page = ref(1)
 const limit = ref(10)
 
+//换关键词时回到第一页
+watch(
+  () => postStore.keyword,
+  () => {
+    page.value = 1
+  },
+)
 
-const changePage = (pageS:number) =>{
-    page.value = pageS
-    postStore.getlist(page.value, limit.value)   //如果传入的参数和默认参数不一样会覆盖
- }
+const changePage = (pageS: number) => {
+  page.value = pageS
+  //搜索状态下翻页要继续搜索,否则会跳回普通列表
+  if (postStore.keyword) postStore.searchPost(postStore.keyword, page.value, limit.value)
+  else postStore.getlist(page.value, limit.value) //如果传入的参数和默认参数不一样会覆盖
+}
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const rou = (post: any) => {
   router.push(`/userData/${post.id}`)
 }
-const like = async (post: any) =>{
-   await axios.post('/like', {post_id:post.id})
-   postStore.getlist()
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const like = async (post: any) => {
+  await axios.post('/like', { post_id: post.id })
+  //搜索状态下刷新要沿用搜索,别把结果刷没
+  if (postStore.keyword) await postStore.searchPost(postStore.keyword, page.value, limit.value)
+  else await postStore.getlist(page.value, limit.value)
 }
-
 </script>
 
 <style scoped>
@@ -74,7 +83,7 @@ const like = async (post: any) =>{
 }
 
 .post-card {
-  border-radius: 14px;
+  border-radius: 12px;
   transition:
     box-shadow 0.25s ease,
     transform 0.25s ease,
@@ -140,8 +149,8 @@ const like = async (post: any) =>{
   color: var(--ink-3);
   letter-spacing: 0.05em;
 }
-#tu{
-    display: flex;
+#tu {
+  display: flex;
   justify-content: center;
   padding: 10px;
 }

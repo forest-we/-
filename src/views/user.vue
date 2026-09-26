@@ -24,6 +24,7 @@
       <el-tab-pane label="我的帖子" name="posts" />
       <el-tab-pane label="我的关注" name="follows" />
       <el-tab-pane label="我的粉丝" name="fans" />
+      <el-tab-pane label="我的图片" name="photo"></el-tab-pane>
     </el-tabs>
 
     <!-- 子页面出口 -->
@@ -58,14 +59,17 @@ const activeTab = computed(() => {
   const p = route.path
   if (p.startsWith('/user/follows')) return 'follows'
   if (p.startsWith('/user/fans')) return 'fans'
+  if (p.startsWith('/user/photo')) return 'photo'
   return 'posts'
 })
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const onTabClick = (pane: any) => {
   const name = pane.paneName
   router.push(name === 'posts' ? '/user' : `/user/${name}`)
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const up = async (upload: any) => {
   const file = upload.file
   const formee = new FormData()
@@ -74,6 +78,7 @@ const up = async (upload: any) => {
   useAvatar.avatar = res.data.url
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const adD = ref<any>(null)
 const adDuser = () => {
   adD.value.addClose()

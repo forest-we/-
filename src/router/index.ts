@@ -10,6 +10,7 @@ import MyFans from '@/views/user/MyFans.vue'
 import Follow from '@/views/follow.vue'
 import Photo from '@/views/photo.vue'
 import Hot from '@/views/hot.vue'
+import Myphoto from '@/views/user/Myphoto.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -55,35 +56,47 @@ const router = createRouter({
           name: '我的粉丝',
           component: MyFans,
         },
+        {
+          path: 'photo',
+          name: '我的图片',
+          component: Myphoto,
+        },
       ],
     },
     {
       path: '/follow',
       name: '关注页',
-      component: Follow
+      component: Follow,
     },
     {
       path: '/photo',
       name: '图吧页',
-      component: Photo
+      component: Photo,
     },
     {
       path: '/hot',
       name: '热榜页',
-      component: Hot
-    }
+      component: Hot,
+    },
   ],
 })
 router.beforeEach((to) => {
   const token = localStorage.getItem('token')
   // 首页和帖子详情页都需要登录,详情页路径形如 /userData/123,所以用前缀匹配
-  if ((!token || token === 'null') && (to.path === '/' || to.path.startsWith('/userData') || to.path === '/follow' || to.path === '/photo' || to.path === '/hot')) {
+  if (
+    (!token || token === 'null') &&
+    (to.path === '/' ||
+      to.path.startsWith('/userData') ||
+      to.path === '/follow' ||
+      to.path === '/photo' ||
+      to.path === '/hot')
+  ) {
     return '/login'
   }
   if (!token && to.path.startsWith('/user')) {
     return '/login'
   }
-  if(token && to.path === '/login'){
+  if (token && to.path === '/login') {
     return '/'
   }
 })
