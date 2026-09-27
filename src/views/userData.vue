@@ -47,7 +47,7 @@
           <p class="comment-content">{{ comment.content }}</p>
         </div>
       </div>
-      <pagination :page="page" :limit="pageSize" :total="total" @pagechangs="pagecomment" />
+      <pagination :page="page" :limit="pageSize" :total="total" @pageChangs="pagecomment" />
     </section>
   </article>
 </template>
@@ -100,7 +100,7 @@ const commentPost = async () => {
       return ElMessage.error('评论不能为空')
     }
 
-    const res = await axios.post('comment/create', commenT.value)
+    const res = await axios.post('api/comment/create', commenT.value)
     if (res.data.code === 200) {
       ElMessage({
         message: '发布成功',
@@ -146,7 +146,7 @@ const follow = async () => {
 
 const postGet = async () => {
   try {
-    const res = await axios.get('post/detail', {
+    const res = await axios.get('api/post/detail', {
       params: {
         post_id: postId,
       },
@@ -158,15 +158,15 @@ const postGet = async () => {
 }
 
 const postComment = async () => {
-  const res = await axios.get('comment/list', {
+  const res = await axios.get('api/comment/list', {
     params: {
       post_id: postId,
-      page: page,
-      pageSize: pageSize,
+      page: page.value,
+      pageSize: pageSize.value,
     },
   })
-  postComments.value = res.data.data
-  total.value = res.data.total
+  postComments.value = res.data.data ?? []
+  total.value = res.data.total ?? 0
 }
 
 const pagecomment = (p: number) => {

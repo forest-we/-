@@ -74,7 +74,7 @@ const up = async (upload: any) => {
   const file = upload.file
   const formee = new FormData()
   formee.append('avatar', file)
-  const res = await axios.post('upload', formee)
+  const res = await axios.post('api/upload', formee)
   useAvatar.avatar = res.data.url
 }
 

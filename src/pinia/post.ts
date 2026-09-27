@@ -21,7 +21,7 @@ export const usePostStore = defineStore('post', () => {
   const getlist = async (page = 1, pageSize = 10) => {
     const my = ++seq
     keyword.value = '' //回到普通列表态
-    const res = await axios.get('post/list', {
+    const res = await axios.get('api/post/list', {
       params: { page, pageSize },
     })
     if (my !== seq) return //已经有更新的请求了,丢弃这次的结果
@@ -39,7 +39,7 @@ export const usePostStore = defineStore('post', () => {
     }
     const my = ++seq
     keyword.value = kw
-    const res = await axios.post('post/search', { title: kw, page: page, pageSize: pageSize })
+    const res = await axios.post('api/post/search', { title: kw, page: page, pageSize: pageSize })
     if (my !== seq) return
     postList.value = res.data.data ?? []
     total.value = res.data.total ?? 0

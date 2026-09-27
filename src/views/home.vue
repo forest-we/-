@@ -64,7 +64,7 @@ const rou = (post: any) => {
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const like = async (post: any) => {
-  await axios.post('/like', { post_id: post.id })
+  await axios.post('api/like', { post_id: post.id })
   //搜索状态下刷新要沿用搜索,别把结果刷没
   if (postStore.keyword) await postStore.searchPost(postStore.keyword, page.value, limit.value)
   else await postStore.getlist(page.value, limit.value)

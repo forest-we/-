@@ -71,7 +71,7 @@ const userAdd = async () => {
     return
   }
   try {
-    const res = await axios.put('user/add', {
+    const res = await axios.put('api/user/add', {
       username: from.value.username.trim(),
       profile: from.value.profile.trim(),
     })

@@ -1,3 +1,6 @@
+<!-- eslint-disable vue/multi-word-component-names -->
+// eslint-disable-next-line vue/multi-word-component-names
+// eslint-disable-next-line vue/multi-word-component-names
 <template>
 <div class="feed" v-if="followS.followData.length">
     <el-card v-for="post in followS.followData" :key="post.id" class="post-card">
@@ -27,11 +30,7 @@ import { onMounted } from 'vue';
 
 
 import {
-  Check,
-  Delete,
-  Edit,
-  Message,
-  Search,
+ 
   Star,
 } from '@element-plus/icons-vue'
 import axios from '@/axios/axios';
@@ -49,11 +48,13 @@ const changePage = (pageS:number) =>{
  }
 
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const rou = (post:any) =>{
         router.push(`/userData/${post.id}`)
 }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const like = async (post: any) =>{
-    await axios.post('/like', {post_id:post.id})
+    await axios.post('api/like', {post_id:post.id})
 }
 
 </script>

@@ -59,7 +59,7 @@ const previewList = computed(() => photoData.value.map((i) => i.url))
 const get = async (pages: number = page.value) => {
   loading.value = true
   try {
-    const res = await axios.get('/image/user', {
+    const res = await axios.get('api/image/user', {
       params: { page: pages, pageSize: pageSize.value },
     })
     photoData.value = res.data.data ?? []
@@ -88,7 +88,7 @@ const delPhoto = async (id: number) => {
     return //用户点了取消
   }
   try {
-    const res = await axios.delete('image/delete', { data: { id: id } })
+    const res = await axios.delete('api/image/delete', { data: { id: id } })
     if (res.data.code === 200) {
       ElMessage.success('删除成功')
       //删掉的是当页最后一张时要回退一页,否则会停在空页:
