@@ -16,11 +16,11 @@
 
  
 <script lang="ts" setup>
-import { reactive, ref } from 'vue';
+import {  ref } from 'vue';
 import { useUserStore } from '@/pinia/user';
 import axios from '@/axios/axios';
-import { ElMention, ElMessage } from 'element-plus';
-import type { FormInstance, FormRules } from 'element-plus'
+import { ElMessage } from 'element-plus';
+
 const useStore = useUserStore()
 const adD = ref(false)
 const addClose = () =>{
@@ -30,7 +30,7 @@ const addClose = () =>{
 }
 const userAdd = async () =>{
    try{
-     const res = await axios.put('user/add', from.value)
+     const res = await axios.put('/api/user/add', from.value)
     if(res.data.code  === 200){
         ElMessage({
             message:'修改成功',

@@ -6,7 +6,7 @@ import axios from '@/axios/axios'
 export const useAvatarStore = defineStore('avatar', ()=>{
     const avatar = ref(localStorage.getItem('avatar') || '')
     const avatarPost = async () =>{
-        const res = await axios.get('upload')
+        const res = await axios.get('/api/upload')
         avatar.value = res.data.url
         localStorage.setItem('avatar', avatar.value)
     }

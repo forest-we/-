@@ -68,7 +68,7 @@ const loading = ref(false)
 const getList = async () => {
   loading.value = true
   try {
-    const res = await axios.get('post/my', {
+    const res = await axios.get('/api/post/my', {
       params: { page: page.value, pageSize: pageSize.value },
     })
     posts.value = res.data.data
@@ -100,7 +100,7 @@ const delPost = async (id: number) => {
     return // 用户取消
   }
   try {
-    const res = await axios.delete('post/delete', { data: { post_id: id } })
+    const res = await axios.delete('/api/post/delete', { data: { post_id: id } })
     if (res.data.code === 200) {
       ElMessage.success('删除成功')
       // 如果当前页删空了且不是第一页，回退一页

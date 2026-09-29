@@ -44,7 +44,7 @@ const normalizeProfile = (v: string | null) =>
 const getFans = async () => {
   loading.value = true
   try {
-    const res = await axios.get('post/user_follow')
+    const res = await axios.get('/api/post/user_follow')
     fans.value = res.data.data || []
     fanslike.value = res.data.fanslike
   } catch {

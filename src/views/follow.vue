@@ -26,14 +26,7 @@ import pagination from '@/components/pagination.vue';
 import { onMounted } from 'vue';
 
 
-import {
-  Check,
-  Delete,
-  Edit,
-  Message,
-  Search,
-  Star,
-} from '@element-plus/icons-vue'
+import { Star} from '@element-plus/icons-vue'
 import axios from '@/axios/axios';
 import { ref } from 'vue';
 const followS = useFollow()
@@ -53,7 +46,7 @@ const rou = (post:any) =>{
         router.push(`/userData/${post.id}`)
 }
 const like = async (post: any) =>{
-    await axios.post('/like', {post_id:post.id})
+    await axios.post('/api/like', {post_id:post.id})
 }
 
 </script>

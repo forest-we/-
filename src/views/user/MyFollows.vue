@@ -41,7 +41,7 @@ const normalizeProfile = (v: string | null) =>
 const getFollows = async () => {
   loading.value = true
   try {
-    const res = await axios.get('post/follow_user')
+    const res = await axios.get('/api/post/follow_user')
     follows.value = res.data.data || []
   } catch {
     // 失败保持空态

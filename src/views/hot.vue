@@ -50,7 +50,7 @@ const loading = ref(false)
 const getHotList = async () => {
   loading.value = true
   try {
-    const res = await axios.get('like/win')
+    const res = await axios.get('/api/like/win')
     if (res.data.code === 200) {
       list.value = res.data.data
     }

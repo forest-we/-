@@ -11,7 +11,7 @@ export const useUserStore = defineStore('user', () => {
   const token = ref(localStorage.getItem('token') || '')
   const Profile = ref(normalizeProfile(localStorage.getItem('profile')))
   const Login = async (from: { username: string; password: string }) => {
-    const res = await axios.post('api/login', from)
+    const res = await axios.post('/api/login', from)
     userId.value = res.data.data.id
     username.value = res.data.data.username
     token.value = res.data.token

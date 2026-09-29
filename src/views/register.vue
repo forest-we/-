@@ -41,7 +41,7 @@ const regiser = async () => {
     if (!from.value.password || !from.value.username) {
       return ElMessage.error('账号密码为空')
     }
-    const res = await axios.post('api/register', from.value)
+    const res = await axios.post('/api/register', from.value)
     if (res.data.code === 200) {
       ElMessage({
         message: res.data.message,

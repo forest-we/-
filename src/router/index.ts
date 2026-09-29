@@ -7,6 +7,7 @@ import user from '@/views/user.vue'
 import MyPosts from '@/views/user/MyPosts.vue'
 import MyFollows from '@/views/user/MyFollows.vue'
 import MyFans from '@/views/user/MyFans.vue'
+import MyPhotos from '@/views/user/MyPhotos.vue'
 import Follow from '@/views/follow.vue'
 import Photo from '@/views/photo.vue'
 import Hot from '@/views/hot.vue'
@@ -54,6 +55,11 @@ const router = createRouter({
           path: 'fans',
           name: '我的粉丝',
           component: MyFans,
+        },
+        {
+          path: 'photos',
+          name: '我的图片',
+          component: MyPhotos,
         },
       ],
     },

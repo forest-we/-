@@ -24,6 +24,7 @@
       <el-tab-pane label="我的帖子" name="posts" />
       <el-tab-pane label="我的关注" name="follows" />
       <el-tab-pane label="我的粉丝" name="fans" />
+      <el-tab-pane label="我的图片" name="photos" />
     </el-tabs>
 
     <!-- 子页面出口 -->
@@ -53,11 +54,12 @@ onMounted(() => {
   useAvatar.avatarPost()
 })
 
-// Tab 与路由联动：/user → posts，/user/follows → follows，/user/fans → fans
+// Tab 与路由联动：/user → posts，/user/follows → follows，/user/fans → fans，/user/photos → photos
 const activeTab = computed(() => {
   const p = route.path
   if (p.startsWith('/user/follows')) return 'follows'
   if (p.startsWith('/user/fans')) return 'fans'
+  if (p.startsWith('/user/photos')) return 'photos'
   return 'posts'
 })
 
@@ -70,7 +72,7 @@ const up = async (upload: any) => {
   const file = upload.file
   const formee = new FormData()
   formee.append('avatar', file)
-  const res = await axios.post('upload', formee)
+  const res = await axios.post('/api/upload', formee)
   useAvatar.avatar = res.data.url
 }
 

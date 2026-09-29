@@ -112,7 +112,7 @@ const commentPost = async () => {
       return ElMessage.error('评论不能为空')
     }
 
-    const res = await axios.post('comment/create', commenT.value)
+    const res = await axios.post('/api/comment/create', commenT.value)
     if (res.data.code === 200) {
       ElMessage({
         message: '发布成功',
@@ -131,7 +131,7 @@ const isFollow = ref(false)
 // 进页面查一次关注状态
 const followStatus = async () => {
   try {
-    const res = await axios.get('api/follow/status', {
+    const res = await axios.get('/api/follow/status', {
       params: { post_user_id: postData.value.id },
     })
     isFollow.value = res.data.is_follow
@@ -143,7 +143,7 @@ const followStatus = async () => {
 const follow = async () => {
   try {
     const post_user_id = postData.value.id
-    const res = await axios.post('api/follow', { post_user_id: post_user_id })
+    const res = await axios.post('/api/follow', { post_user_id: post_user_id })
     if (res.data.code === 200) {
       isFollow.value = res.data.is_follow // 用后端返回的最新状态
       ElMessage({
@@ -158,7 +158,7 @@ const follow = async () => {
 
 const postGet = async () => {
   try {
-    const res = await axios.get('post/detail', {
+    const res = await axios.get('/api/post/detail', {
       params: {
         post_id: postId,
       },
@@ -169,7 +169,7 @@ const postGet = async () => {
   }
 }
 const postComment = async () => {
-  const res = await axios.get('comment/list', {
+  const res = await axios.get('/api/comment/list', {
     params: {
       post_id: postId,
     },

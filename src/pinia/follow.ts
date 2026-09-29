@@ -14,7 +14,7 @@ export const useFollow = defineStore('follow', () =>{
     const total = ref(0)
     const followData = ref<data[]>([])
     const follow = async (page = 1, pageSize = 10) =>{
-        const res = await axios.get('api/follow/post-list', { params: { page, pageSize } })
+        const res = await axios.get('/api/follow/post-list', { params: { page, pageSize } })
         followData.value = res.data.data
         total.value = res.data.total
     }

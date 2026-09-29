@@ -53,7 +53,7 @@ const limit = ref(15) // 一页 15 张（10~20 之间）
 
 // 拉取图片列表：参数和后端 /image/list 的 page/pageSize 对齐
 const photoGet = async (p: number = page.value) => {
-  const res = await axios.get('image/list', {
+  const res = await axios.get('/api/image/list', {
     params: { page: p, pageSize: limit.value },
   })
   srcList.value = res.data.data
@@ -71,7 +71,7 @@ const ee = async (a: any) => {
     const file = a.file
     const photo = new FormData()
     photo.append('image', file)
-    const res = await axios.post('image/upload', photo)
+    const res = await axios.post('/api/image/upload', photo)
     if (res.data.code === 200) {
       ElMessage({ message: '上传成功', type: 'success' })
       photoGet() // 上传完刷新回第一页
