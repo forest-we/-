@@ -54,7 +54,7 @@ onMounted(() => {
   useAvatar.avatarPost()
 })
 
-// Tab 与路由联动：/user → posts，/user/follows → follows，/user/fans → fans
+// Tab 与路由联动：/user → posts，/user/follows → follows，/user/fans → fans，/user/photos → photos
 const activeTab = computed(() => {
   const p = route.path
   if (p.startsWith('/user/follows')) return 'follows'
@@ -74,7 +74,7 @@ const up = async (upload: any) => {
   const file = upload.file
   const formee = new FormData()
   formee.append('avatar', file)
-  const res = await axios.post('api/upload', formee)
+  const res = await axios.post('/api/upload', formee)
   useAvatar.avatar = res.data.url
 }
 

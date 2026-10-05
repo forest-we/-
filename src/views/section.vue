@@ -67,13 +67,13 @@ let seq = 0
 const emptyText = computed(() => (currentId.value ? '该分区还没有帖子' : '暂时没有帖子呢'))
 
 const loadSections = async () => {
-  const res = await axios.get('api/section/list')
+  const res = await axios.get('/api/section/list')
   tabs.value = [{ id: 0, name: '全部' }, ...(res.data.data ?? [])]
 }
 
 const loadPosts = async () => {
   const my = ++seq
-  const res = await axios.get('api/post/list', {
+  const res = await axios.get('/api/post/list', {
     params: {
       page: page.value,
       pageSize: limit.value,
@@ -102,7 +102,7 @@ const open = (p: PostItem) => {
 }
 
 const like = async (p: PostItem) => {
-  await axios.post('api/like', { post_id: p.id })
+  await axios.post('/api/like', { post_id: p.id })
   await loadPosts() //重新拉当前页,点赞数才会更新
 }
 

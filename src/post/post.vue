@@ -38,12 +38,12 @@ defineExpose({ clos })
 const emptyForm = () => ({ title: '', content: '', section_id: null as number | null })
 const from = ref(emptyForm())
 onMounted(async () => {
-  const res = await axios.get('api/section/list')
+  const res = await axios.get('/api/section/list')
   sections.value = res.data.data ?? []
 })
 const Post = async () => {
   try {
-    const res = await axios.post('api/post/create', from.value)
+    const res = await axios.post('/api/post/create', from.value)
     // 4xx 不会进 catch,必须自己看 code,否则分区不存在时弹窗会静默关掉
     if (res.data.code === 200) {
       ElMessage({
