@@ -24,7 +24,7 @@
       <el-tab-pane label="我的帖子" name="posts" />
       <el-tab-pane label="我的关注" name="follows" />
       <el-tab-pane label="我的粉丝" name="fans" />
-      <el-tab-pane label="我的图片" name="photo"></el-tab-pane>
+      <el-tab-pane label="我的图片" name="photos" />
     </el-tabs>
 
     <!-- 子页面出口 -->
@@ -59,7 +59,7 @@ const activeTab = computed(() => {
   const p = route.path
   if (p.startsWith('/user/follows')) return 'follows'
   if (p.startsWith('/user/fans')) return 'fans'
-  if (p.startsWith('/user/photo')) return 'photo'
+  if (p.startsWith('/user/photos')) return 'photos'
   return 'posts'
 })
 

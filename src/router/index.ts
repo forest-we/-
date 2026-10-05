@@ -10,7 +10,7 @@ import MyFans from '@/views/user/MyFans.vue'
 import Follow from '@/views/follow.vue'
 import Photo from '@/views/photo.vue'
 import Hot from '@/views/hot.vue'
-import Myphoto from '@/views/user/Myphoto.vue'
+import MyPhotos from '@/views/user/MyPhotos.vue'
 import Section from '@/views/section.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -58,9 +58,9 @@ const router = createRouter({
           component: MyFans,
         },
         {
-          path: 'photo',
-          name: '我的图片',
-          component: Myphoto,
+          path: 'photos',
+          name:'我的图片',
+          component: MyPhotos,
         },
       ],
     },
