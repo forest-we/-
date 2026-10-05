@@ -11,6 +11,7 @@ import Follow from '@/views/follow.vue'
 import Photo from '@/views/photo.vue'
 import Hot from '@/views/hot.vue'
 import Myphoto from '@/views/user/Myphoto.vue'
+import Section from '@/views/section.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -78,6 +79,11 @@ const router = createRouter({
       name: '热榜页',
       component: Hot,
     },
+    {
+      path:'/section',
+      name:'分类',
+      component: Section
+    }
   ],
 })
 router.beforeEach((to) => {
@@ -89,7 +95,8 @@ router.beforeEach((to) => {
       to.path.startsWith('/userData') ||
       to.path === '/follow' ||
       to.path === '/photo' ||
-      to.path === '/hot')
+      to.path === '/hot' ||
+      to.path === '/section')
   ) {
     return '/login'
   }

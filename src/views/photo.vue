@@ -66,6 +66,8 @@ const changePage = (pageS: number) => {
 }
 
 // 上传（http-request 自定义请求，字段名 image 和后端 multer single('image') 对齐）
+
+//file就是文件本身
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ee = async (a: any) => {
   try {

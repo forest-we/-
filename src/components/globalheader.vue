@@ -14,13 +14,15 @@
         <el-menu-item index="/follow">关注</el-menu-item>
         <el-menu-item index="/hot">热榜</el-menu-item>
         <el-menu-item index="/photo">图吧</el-menu-item>
+        <el-menu-item index="/section">专栏</el-menu-item>
         <el-sub-menu index="1">
           <template #title>
             <el-avatar class="author-avatar" :size="45" :src="useAvatar.avatar">
               <el-icon><User /></el-icon> </el-avatar
           ></template>
-          <el-menu-item index="/user">个人主页</el-menu-item>
+          <el-menu-item index="/user"><el-icon><User /></el-icon>个人主页</el-menu-item>
           <el-menu-item index="logout" @click="useStore.logout">退出登录</el-menu-item>
+          <el-menu-item @click="likes"><el-icon><ChatDotRound /></el-icon>关于作者</el-menu-item>
         </el-sub-menu>
       </el-menu>
     </div>
@@ -35,7 +37,7 @@
         @keyup.enter="ttt"
         @clear="clearSearch"
       />
-      <el-button class="gh-search-btn" type="primary" @click="ttt">搜索</el-button>
+      <el-button class="gh-search-btn" type="primary" @click="ttt"><el-icon><Search /></el-icon>搜索</el-button>
     </div>
     <div class="gh-right">
       <el-button
@@ -50,12 +52,13 @@
     </div>
   </div>
   <post ref="postss" />
+  <like ref="asdd"/>
 </template>
 
 <script setup lang="ts">
 import post from '@/post/post.vue'
 import { Edit, Search, User } from '@element-plus/icons-vue'
-
+import like from '@/like/like.vue'
 import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAvatarStore } from '@/pinia/avatar'
@@ -74,6 +77,7 @@ const activeMenu = computed(() => {
   if (p.startsWith('/follow')) return '/follow'
   if (p.startsWith('/hot')) return '/hot'
   if (p.startsWith('/user')) return '/user'
+  if (p.startsWith('/section')) return '/section'
   return ''
 })
 const title = ref('')
@@ -96,8 +100,13 @@ const clearSearch = async () => {
 const useAvatar = useAvatarStore()
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const postss = ref<any>(null)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const asdd = ref<any>(null) 
 const postClos = () => {
   postss.value?.clos()
+}
+const likes = ()=>{
+  asdd.value.hello()
 }
 const Login = () => {
   router.push('/login')
